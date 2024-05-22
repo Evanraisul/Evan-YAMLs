@@ -1,0 +1,14 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MemcachedOpsRequest
+metadata:
+  name: memcd-reconfig
+  namespace: demo
+spec:
+  type: Reconfigure
+  databaseRef:
+    name: memcd-quickstart
+  configuration:
+    applyConfig:
+      memcached.conf: |
+        -m 128
+        -c 50

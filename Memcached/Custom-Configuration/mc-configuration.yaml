@@ -1,0 +1,10 @@
+apiVersion: v1
+stringData:
+  memcached.conf: |
+    -m 32 
+kind: Secret
+metadata:
+  name: mc-configuration
+  namespace: demo
+  resourceVersion: "4505"
+  selfLink: /api/v1/namespaces/demo/secrets/mc-configuration
