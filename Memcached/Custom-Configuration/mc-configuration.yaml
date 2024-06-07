@@ -7,4 +7,3 @@ metadata:
   name: mc-configuration
   namespace: demo
   resourceVersion: "4505"
-  selfLink: /api/v1/namespaces/demo/secrets/mc-configuration
