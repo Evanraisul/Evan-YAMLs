@@ -6,7 +6,7 @@ metadata:
 spec:
   replicas: 1
   version: "1.6.22"
-  terminationPolicy: WipeOut
+  deletionPolicy: WipeOut
   podTemplate:
     spec:
       containers:
@@ -14,14 +14,21 @@ spec:
         resources:
           limits:
             cpu: 500m
-            memory: 128Mi
+            memory: 256Mi
           requests:
-            cpu: 250m
-            memory: 64Mi
+            cpu: 500m
+            memory: 256Mi
   monitor:
     agent: prometheus.io/operator
     prometheus:
       serviceMonitor:
         labels:
           release: prometheus
-        interval: 10s
+      exporter:
+        resources:
+          requests:
+            memory: 512Mi
+            cpu: 200m
+          limits:
+            memory: 512Mi
+            cpu: 250m
