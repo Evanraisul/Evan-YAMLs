@@ -1,14 +1,11 @@
 apiVersion: ops.kubedb.com/v1alpha1
 kind: MemcachedOpsRequest
 metadata:
-  name: memcd-reconfig
+  name: update-memcd
   namespace: demo
 spec:
-  type: Reconfigure
+  type: UpdateVersion
   databaseRef:
     name: memcd-quickstart
-  configuration:
-    applyConfig:
-      memcached.conf: |
-        -m 50
-        -c 50
+  updateVersion:
+    targetVersion: 1.6.22

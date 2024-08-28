@@ -1,0 +1,23 @@
+apiVersion: appcatalog.appscode.com/v1alpha1
+kind: AppBinding
+metadata:
+  name: memcached-appbinding
+  namespace: demo
+spec:
+  appRef:
+    apiGroup: kubedb.com
+    kind: Memcached
+    name: mc1
+    namespace: demo
+  type: kubedb.com/memcached
+  version: 1.6.22
+  clientConfig:
+    service:
+      name: memcached
+      namespace: demo
+      port: 11211
+      scheme: tcp # Use "tcp" for Memcached since it's not HTTP-based
+  secret:
+    name: memcached-auth
+  
+  

@@ -1,14 +1,11 @@
 apiVersion: ops.kubedb.com/v1alpha1
 kind: MemcachedOpsRequest
 metadata:
-  name: memcd-reconfig
+  name: memcd-horizontal-up
   namespace: demo
 spec:
-  type: Reconfigure
+  type: HorizontalScaling
   databaseRef:
     name: memcd-quickstart
-  configuration:
-    applyConfig:
-      memcached.conf: |
-        -m 50
-        -c 50
+  horizontalScaling:
+    replicas: 3

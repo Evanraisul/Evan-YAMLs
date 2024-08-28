@@ -1,7 +1,7 @@
 apiVersion: kubedb.com/v1
 kind: Memcached
 metadata:
-  name: coreos-prom-memcd
+  name: builtin-prom-memcd
   namespace: demo
 spec:
   replicas: 1

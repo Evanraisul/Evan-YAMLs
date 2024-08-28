@@ -1,4 +1,4 @@
-apiVersion: kubedb.com/v1
+apiVersion: kubedb.com/v1alpha2
 kind: Memcached
 metadata:
   name: memcd-quickstart
@@ -11,12 +11,16 @@ spec:
   terminationPolicy: WipeOut
   podTemplate:
     spec:
-      containers:
-      - name: memcached
-        resources:
-          limits:
-            cpu: 500m
-            memory: 128Mi
-          requests:
-            cpu: 250m
-            memory: 64Mi
+      resources:
+        limits:
+          cpu: 500m
+          memory: 128Mi
+        requests:
+          cpu: 250m
+          memory: 64Mi
+      securityContext:
+        runAsGroup: 70
+        runAsNonRoot: true
+        runAsUser: 70
+        seccompProfile:
+          type: RuntimeDefault
