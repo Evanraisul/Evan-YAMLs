@@ -6,13 +6,13 @@ metadata:
 spec:
   type: VerticalScaling
   databaseRef:
-    name: mc1
+    name: memcd-quickstart
   verticalScaling:
     memcached:
       resources:
         requests:
-          memory: "200Mi"
-          cpu: "200m"
+          memory: "400Mi"
+          cpu: "500m"
         limits:
-          memory: "200Mi"
-          cpu: "200m"
+          memory: "400Mi"
+          cpu: "500m"

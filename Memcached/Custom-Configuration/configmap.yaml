@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-cionfigmap
+data:
+  your-file.txt: |
+    foo:bar

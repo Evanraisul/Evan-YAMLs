@@ -1,24 +1,24 @@
 apiVersion: autoscaling.kubedb.com/v1alpha1
 kind: MemcachedAutoscaler
 metadata:
-  name: mc-as
+  name: mc-autoscaler
   namespace: demo
 spec:
   databaseRef:
-    name: mc1
+    name: mc-autoscaler-compute
   opsRequestOptions:
     timeout: 3m
     apply: IfReady
   compute:
     memcached:
       trigger: "On"
-      podLifeTimeThreshold: 5m
+      podLifeTimeThreshold: 1m
       resourceDiffPercentage: 20
       minAllowed:
+        cpu: 5m
+        memory: 5Mi
+      maxAllowed:
         cpu: 400m
         memory: 400Mi
-      maxAllowed:
-        cpu: 1
-        memory: 1Gi
       controlledResources: ["cpu", "memory"]
       containerControlledValues: "RequestsAndLimits"
