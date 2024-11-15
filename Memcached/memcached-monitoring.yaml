@@ -1,12 +1,23 @@
 apiVersion: kubedb.com/v1
 kind: Memcached
 metadata:
-  name: memcached
+  name: coreos-prom-memcd
   namespace: demo
 spec:
   replicas: 1
   version: "1.6.22"
   deletionPolicy: WipeOut
+  disableAuth: true
+  tls:
+    issuerRef:
+      apiGroup: "cert-manager.io"
+      kind: Issuer
+      name: memcached-ca-issuer
+    certificates:
+    - alias: client
+      ipAddresses:
+      - 127.0.0.1
+      - 192.168.0.252
   podTemplate:
     spec:
       containers:
