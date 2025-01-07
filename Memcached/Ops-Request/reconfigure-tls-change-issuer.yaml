@@ -9,6 +9,6 @@ spec:
     name: memcd-quickstart
   tls:
     issuerRef:
-      name: mc-new-issuer
+      name: my-new-issuer
       kind: Issuer
       apiGroup: "cert-manager.io"

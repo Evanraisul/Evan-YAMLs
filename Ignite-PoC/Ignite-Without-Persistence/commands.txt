@@ -1,0 +1,22 @@
+kc create namespace ignite
+-namespace/ignite created
+-Created configmap/kube-root-ca.crt
+-Created serviceaccount/default
+
+kc apply -f service.yaml
+-service/ignite-service created
+
+kubectl create sa ignite -n ignite
+-serviceaccount/ignite created
+
+kc apply -f clster-role.yaml
+-clusterrole.rbac.authorization.k8s.io/ignite created
+-clusterrolebinding.rbac.authorization.k8s.io/ignite created
+
+kubectl create configmap ignite-config -n ignite --from-file=node-configuration.xml
+-configmap/ignite-config created
+
+kc apply -f deployment.yaml
+-statefulset.apps/ignite-cluster created
+
+kc logs -n ignite ignite-cluster-0 -f

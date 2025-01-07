@@ -1,11 +1,9 @@
 apiVersion: ops.kubedb.com/v1alpha1
 kind: MemcachedOpsRequest
 metadata:
-  name: mc-tls-remove
+  name: mc-auth-rotate
   namespace: demo
 spec:
-  type: ReconfigureTLS
+  type: RotateAuth
   databaseRef:
     name: memcd-quickstart
-  tls:
-    remove: true

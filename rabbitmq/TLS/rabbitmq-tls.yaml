@@ -1,0 +1,20 @@
+apiVersion: kubedb.com/v1alpha2
+kind: RabbitMQ
+metadata:
+  name: rabbitmq-tls
+  namespace: demo
+spec:
+  version: "3.13.2"
+  enableSSL: true
+  tls:
+    issuerRef:
+      apiGroup: "cert-manager.io"
+      kind: Issuer
+      name: rabbitmq-ca-issuer
+  storage:
+    storageClassName: "standard"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi

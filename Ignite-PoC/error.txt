@@ -1,0 +1,70 @@
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+[11:03:47]    __________  ________________ 
+[11:03:47]   /  _/ ___/ |/ /  _/_  __/ __/ 
+[11:03:47]  _/ // (7 7    // /  / / / _/   
+[11:03:47] /___/\___/_/|_/___/ /_/ /x___/  
+[11:03:47] 
+[11:03:47] ver. 2.16.0#20231215-sha1:7bde6a42
+[11:03:47] 2023 Copyright(C) Apache Software Foundation
+[11:03:47] 
+[11:03:47] Ignite documentation: https://ignite.apache.org
+[11:03:47] 
+[11:03:47] Quiet mode.
+[11:03:47]   ^-- Logging to file '/opt/ignite/apache-ignite/work/log/ignite-c93390ae.0.log'
+[11:03:47]   ^-- Logging by 'JavaLogger [quiet=true, config=null]'
+[11:03:47]   ^-- To see **FULL** console log here add -DIGNITE_QUIET=false or "-v" to ignite.{sh|bat}
+[11:03:47] 
+[11:03:47] OS: Linux 6.8.0-51-generic amd64
+[11:03:47] VM information: OpenJDK Runtime Environment 1.8.0_392-b08 Temurin OpenJDK 64-Bit Server VM 25.392-b08
+[11:03:47] Please set system property '-Djava.net.preferIPv4Stack=true' to avoid possible problems in mixed environments.
+[11:03:47] Configured plugins:
+[11:03:47]   ^-- None
+[11:03:47] 
+[11:03:47] Configured failure handler: [hnd=StopNodeOrHaltFailureHandler [tryStop=false, timeout=0, super=AbstractFailureHandler [ignoredFailureTypes=UnmodifiableSet [SYSTEM_WORKER_BLOCKED, SYSTEM_CRITICAL_OPERATION_TIMEOUT]]]]
+[11:03:47] Message queue limit is set to 0 which may lead to potential OOMEs when running cache operations in FULL_ASYNC or PRIMARY_SYNC modes due to message queues growth on sender and receiver sides.
+[11:03:48,281][SEVERE][main][TcpDiscoverySpi] Failed to get registered addresses from IP finder (retrying every 2000ms; change 'reconnectDelay' to configure the frequency of retries) [maxTimeout=0]
+class org.apache.ignite.spi.IgniteSpiException: Failed to retrieve Ignite pods IP addresses.
+	at org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder.getRegisteredAddresses(TcpDiscoveryKubernetesIpFinder.java:81)
+	at org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi.registeredAddresses(TcpDiscoverySpi.java:2057)
+	at org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi.resolvedAddresses(TcpDiscoverySpi.java:1992)
+	at org.apache.ignite.spi.discovery.tcp.ServerImpl.sendJoinRequestMessage(ServerImpl.java:1283)
+	at org.apache.ignite.spi.discovery.tcp.ServerImpl.joinTopology(ServerImpl.java:1120)
+	at org.apache.ignite.spi.discovery.tcp.ServerImpl.spiStart(ServerImpl.java:472)
+	at org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi.spiStart(TcpDiscoverySpi.java:2206)
+	at org.apache.ignite.internal.managers.GridManagerAdapter.startSpi(GridManagerAdapter.java:277)
+	at org.apache.ignite.internal.managers.discovery.GridDiscoveryManager.start(GridDiscoveryManager.java:1076)
+	at org.apache.ignite.internal.IgniteKernal.startManager(IgniteKernal.java:1774)
+	at org.apache.ignite.internal.IgniteKernal.start(IgniteKernal.java:1161)
+	at org.apache.ignite.internal.IgnitionEx$IgniteNamedInstance.start0(IgnitionEx.java:1725)
+	at org.apache.ignite.internal.IgnitionEx$IgniteNamedInstance.start(IgnitionEx.java:1647)
+	at org.apache.ignite.internal.IgnitionEx.start0(IgnitionEx.java:1089)
+	at org.apache.ignite.internal.IgnitionEx.startConfigurations(IgnitionEx.java:983)
+	at org.apache.ignite.internal.IgnitionEx.start(IgnitionEx.java:889)
+	at org.apache.ignite.internal.IgnitionEx.start(IgnitionEx.java:808)
+	at org.apache.ignite.internal.IgnitionEx.start(IgnitionEx.java:678)
+	at org.apache.ignite.internal.IgnitionEx.start(IgnitionEx.java:647)
+	at org.apache.ignite.Ignition.start(Ignition.java:325)
+	at org.apache.ignite.startup.cmdline.CommandLineStartup.main(CommandLineStartup.java:365)
+Caused by: class org.apache.ignite.IgniteException: Failed to retrieve Ignite pods IP addresses.
+	at org.apache.ignite.internal.kubernetes.connection.KubernetesServiceAddressResolver.getServiceAddresses(KubernetesServiceAddressResolver.java:123)
+	at org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder.getRegisteredAddresses(TcpDiscoveryKubernetesIpFinder.java:76)
+	... 20 more
+Caused by: javax.net.ssl.SSLHandshakeException: Received fatal alert: handshake_failure
+	at sun.security.ssl.Alert.createSSLException(Alert.java:131)
+	at sun.security.ssl.Alert.createSSLException(Alert.java:117)
+	at sun.security.ssl.TransportContext.fatal(TransportContext.java:318)
+	at sun.security.ssl.Alert$AlertConsumer.consume(Alert.java:293)
+	at sun.security.ssl.TransportContext.dispatch(TransportContext.java:185)
+	at sun.security.ssl.SSLTransport.decode(SSLTransport.java:152)
+	at sun.security.ssl.SSLSocketImpl.decode(SSLSocketImpl.java:1401)
+	at sun.security.ssl.SSLSocketImpl.readHandshakeRecord(SSLSocketImpl.java:1309)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:440)
+	at sun.net.www.protocol.https.HttpsClient.afterConnect(HttpsClient.java:559)
+	at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(AbstractDelegateHttpsURLConnection.java:197)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1572)
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1500)
+	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:268)
+	at org.apache.ignite.internal.kubernetes.connection.KubernetesServiceAddressResolver.getServiceAddresses(KubernetesServiceAddressResolver.java:111)
+	... 21 more

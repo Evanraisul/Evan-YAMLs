@@ -1,0 +1,19 @@
+apiVersion: kubedb.com/v1alpha2
+kind: RabbitMQ
+metadata:
+  name: rm-custom-config
+  namespace: demo
+spec:
+  version: "3.13.2"
+  replicas: 1
+  configSecret:
+    name: rm-configuration
+  storage:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: standard
+  storageType: Durable
+  deletionPolicy: WipeOut
