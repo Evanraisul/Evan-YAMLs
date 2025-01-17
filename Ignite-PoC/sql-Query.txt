@@ -1,0 +1,22 @@
+kc exec -it pods/ignite-cluster-0 -n ignite -- sh
+
+-cd {IGNITE_HOME}/bin/
+cd apache-ignite/
+cd bin
+./sqlline.sh -u jdbc:ignite:thin://127.0.0.1/
+
+CREATE TABLE City (id LONG PRIMARY KEY, name VARCHAR) WITH "template=replicated";
+
+CREATE TABLE Person (id LONG, name VARCHAR, city_id LONG, PRIMARY KEY (id, city_id))
+WITH "backups=1, affinityKey=city_id";
+
+INSERT INTO City (id, name) VALUES (1, 'Forest Hill');
+INSERT INTO City (id, name) VALUES (2, 'Denver');
+INSERT INTO City (id, name) VALUES (3, 'St. Petersburg');
+INSERT INTO Person (id, name, city_id) VALUES (1, 'John Doe', 3);
+INSERT INTO Person (id, name, city_id) VALUES (2, 'Jane Roe', 2);
+INSERT INTO Person (id, name, city_id) VALUES (3, 'Mary Major', 1);
+INSERT INTO Person (id, name, city_id) VALUES (4, 'Richard Miles', 2);
+
+SELECT * FROM City;
+

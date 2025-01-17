@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  password: ZkF+djtTKmZtSS5jZDMyUw==
+  username: YWRtaW4=
+kind: Secret
+metadata:
+  creationTimestamp: "2025-01-14T08:16:49Z"
+  labels:
+    app.kubernetes.io/component: database
+    app.kubernetes.io/instance: rm-quickstart
+    app.kubernetes.io/managed-by: kubedb.com
+    app.kubernetes.io/name: rabbitmqs.kubedb.com
+  name: rm-quickstart-auth
+  namespace: demo
+  resourceVersion: "1505"
+  uid: d668777b-2ce8-4c6d-9382-f24f09ef28a8
+type: kubernetes.io/basic-auth
