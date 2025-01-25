@@ -5,6 +5,6 @@ stringData:
     --memory-limit=110
 kind: Secret
 metadata:
-  name: new-configuration
+  name: memcd-quickstart-config
   namespace: demo
   resourceVersion: "4505"

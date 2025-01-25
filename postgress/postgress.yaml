@@ -1,19 +1,18 @@
-apiVersion: kubedb.com/v1alpha2
-kind: Redis
+apiVersion: kubedb.com/v1
+kind: Postgres
 metadata:
-  name: sample-redis
+  name: quick-postgres
   namespace: demo
 spec:
   configSecret:
-    name: mc-configuration
-  version: "6.2.14"
+    name: pg-config
+  version: "13.13"
   storageType: Durable
   storage:
     storageClassName: "standard"
     accessModes:
-    - ReadWriteOnce
+      - ReadWriteOnce
     resources:
       requests:
         storage: 1Gi
-  configSecret:
-    name: rd-custom-config
+  deletionPolicy: DoNotTerminate

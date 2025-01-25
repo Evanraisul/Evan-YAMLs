@@ -1,0 +1,37 @@
+---MemcachedDown---
+Describe the Memcached CR, check the reason from conditions and try restarting the pods.
+1. Can check DB-Phase (Not-Ready/ Provisioning/Critical)
+2. Check the reason, describing Memcached
+
+---MemcachedServiceRespawn---
+Is Memcached restart recently? if "memcached_uptime < 180", then we can be sure that it restart recently.
+1. Can show the value of "memcached_uptime" metrics
+2. Can show the log which will make sure that service is created recently.
+
+---MemcachedConnectionThrottled---
+Raises when the number of times the Memcached connection was throttled reaches 5 over the last minute -> "increase(memcached_conn_yields[1m]) > 5"
+This warning appears with the Too many open connections error message in Memcached.
+1. Can show the value of increase(memcached_conn_yields[1m]) metrics
+2. Increase Memcached configuration max_connections
+
+---MemcachedConnectionsNoneMinor---
+Occurs when memcached_curr_connections == 0
+1. Can show the value of "memcached_curr_connections" metrics
+2. Try to increase Memcached connections.
+
+---MemcachedConnectionsNoneMajor---
+Raises when Memcached has no client connected to it and does not receive data.
+when this condition become true "count(memcached_curr_connections == 0) == count(memcached_up)"
+1. Can show the value of 2 metrices "count(memcached_curr_connections == 0)" & "count(memcached_up)"
+2. Try to increase Memcached connections.
+
+---MemcachedItemsNoneMinor---
+Raises when a Memcached database has no items, "memcached_curr_items == 0"
+1. Show the value of "memcached_curr_items" metrics
+2. Try to increase Memcached items.
+
+---MemcachedEvictionsLimit---
+More than 10 evictions in the Memcached database occurred within a minute.
+1. Show the value of "increase(memcached_evictions[1m])" metrics
+2. Try to change the current configuration of Memcahced's "memcached_evictions"
+
