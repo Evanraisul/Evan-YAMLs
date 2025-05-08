@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <!-- Your Ignite Configuration -->
+    <bean class="org.apache.ignite.configuration.IgniteConfiguration">
+
+        <!-- For this Ignite nodes will run on Server Mode, not in Client Mode -->
+        <property name="clientMode" value="false"/>
+
+        <property name="authenticationEnabled" value="false"/>
+
+        <!-- Work Directory -->
+        <property name="workDirectory" value="/ignite/work-1"/>
+
+        <!-- Storage Configuration -->
+        <property name="dataStorageConfiguration">
+            <bean class="org.apache.ignite.configuration.DataStorageConfiguration">
+
+                <!-- Wal & WalArchive -->
+                <property name="walPath" value="/ignite/wal-1"/>
+            </bean>
+
+        </property>
+
+        <property name="discoverySpi">
+            <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
+                <property name="ipFinder">
+                    <bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder">
+                        <constructor-arg>
+                            <bean class="org.apache.ignite.kubernetes.configuration.KubernetesConnectionConfiguration">
+                                <!-- Namespace & Service Name must be equal -->
+                                <property name="namespace" value="ignite" />
+                            </bean>
+                        </constructor-arg>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+
+    </bean>
+
+     <!-- Your Ignite Configuration -->
+    <bean class="org.apache.ignite.configuration.IgniteConfiguration">
+
+        <!-- For this Ignite nodes will run on Server Mode, not in Client Mode -->
+        <property name="clientMode" value="false"/>
+
+        <property name="workDirectory" value="/ignite/work-2"/>
+
+        <!-- For this authentication will be enable -->
+        <property name="authenticationEnabled" value="true"/>
+
+        <!-- Storage Configuration -->
+        <property name="dataStorageConfiguration">
+            <bean class="org.apache.ignite.configuration.DataStorageConfiguration">
+                <property name="defaultDataRegionConfiguration">
+                    <bean class="org.apache.ignite.configuration.DataRegionConfiguration">
+                        <!-- Enable Persistance -->
+                        <property name="persistenceEnabled" value="true"/>
+                    </bean>
+                </property>
+
+                <!-- Wal & WalArchive -->
+                <property name="walPath" value="/ignite/wal-2"/>
+                <property name="walArchivePath" value="/ignite/walarchive"/>
+            </bean>
+
+        </property>
+
+        <property name="discoverySpi">
+            <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
+                <property name="ipFinder">
+                    <bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder">
+                        <constructor-arg>
+                            <bean class="org.apache.ignite.kubernetes.configuration.KubernetesConnectionConfiguration">
+                                <!-- Namespace & Service Name must be equal -->
+                                <property name="serviceName" value="ignite-service" />
+                            </bean>
+                        </constructor-arg>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+
+        <!-- Communication SPI -->
+        <property name="communicationSpi">
+            <bean class="org.apache.ignite.spi.communication.tcp.TcpCommunicationSpi">
+                <property name="localPort" value="47100"/>
+                <property name="localPortRange" value="100"/> <!-- Range of ports (47100-47200) -->
+            </bean>
+        </property>
+
+    </bean>
+
+</beans>

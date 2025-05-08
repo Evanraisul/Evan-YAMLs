@@ -1,0 +1,23 @@
+apiVersion: kubedb.com/v1alpha2
+kind: RabbitMQ
+metadata:
+  name: rm-quickstart
+  namespace: demo
+spec:
+  replicas: 3
+  version: "3.13.2"
+  deletionPolicy: WipeOut
+  storageType: Durable
+  storage:
+    storageClassName: standard
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 5Gi
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          release: prometheus

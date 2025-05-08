@@ -7,8 +7,8 @@ metadata:
   namespace: ignite
 spec:
   # The initial number of pods to be started by Kubernetes.
-  replicas: 2
-  serviceName: ignite
+  replicas: 3
+  serviceName: ignite-service
   selector:
     matchLabels:
       app: ignite
@@ -22,14 +22,14 @@ spec:
       containers:
         # Custom pod name.
       - name: ignite-node
-        image: apacheignite/ignite:2.16.0-jdk11
+        image: apacheignite/ignite:2.17.0
         env:
         - name: OPTION_LIBS
-          value: ignite-kubernetes,ignite-rest-http
+          value: ignite-kubernetes,ignite-rest-http,ignite-json
         - name: CONFIG_URI
           value: file:///ignite/config/node-configuration.xml
         - name: JVM_OPTS
-          value: "-DIGNITE_WAL_MMAP=false"
+          value: "-DIGNITE_WAL_MMAP=false -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=49112 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
         ports:
         # Ports to open.
         - containerPort: 47100 # communication SPI port
@@ -46,12 +46,10 @@ spec:
           name: wal-vol
         - mountPath: /ignite/walarchive
           name: walarchive-vol
-      securityContext:
-        fsGroup: 2000 # try removing this if you have permission issues
       volumes:
       - name: config-vol
-        configMap:
-          name: ignite-config
+        secret:
+          secretName: ignite-config-secret
   volumeClaimTemplates:
   - metadata:
       name: work-vol
@@ -60,7 +58,7 @@ spec:
 #      storageClassName: "ignite-persistence-storage-class"
       resources:
         requests:
-          storage: "1Gi" # make sure to provide enought space for your application data
+          storage: "1Gi" # make sure to provide enough space for your application data
   - metadata:
       name: wal-vol
     spec:

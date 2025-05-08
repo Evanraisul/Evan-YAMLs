@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ignite-statefulset
+spec:
+  serviceName: "ignite-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ignite
+  template:
+    metadata:
+      labels:
+        app: ignite
+    spec:
+      containers:
+        - name: ignite
+          image: apacheignite/ignite:2.16.0-jdk11
+          ports:
+            - containerPort: 10800
+              name: jdbc
+          env:
+            - name: IGNITE_PASSWORD
+              value: "ignite" # Default password
+            - name: IGNITE_USER
+              value: "ignite" # Default user
+          volumeMounts:
+            - name: ignite-storage
+              mountPath: /var/lib/ignite
+      initContainers:
+        - name: init-ignite-password
+          image: evanraisul/ig-4:_linux_amd64 # Replace with your initContainer image
+          env:
+            - name: IGNITE_HOST
+              value: "localhost"
+            - name: IGNITE_PORT
+              value: "10800"
+            - name: IGNITE_USER
+              value: "ignite"
+            - name: IGNITE_PASSWORD
+              value: "ignite"
+            - name: NEW_PASS
+              value: "newpassword" # New password to set
+            - name: TLS_ENABLED
+              value: "false"
+            - name: TLS_INSECURE
+              value: "false"
+          volumeMounts:
+            - name: ignite-storage
+              mountPath: /var/lib/ignite
+      volumes:
+        - name: ignite-storage
+          emptyDir: {}

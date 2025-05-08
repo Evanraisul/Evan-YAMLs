@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ignite-prometheus-config
+  namespace: ignite
+data:
+  ignite-prometheus.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                               http://www.springframework.org/schema/beans/spring-beans.xsd">
+      
+      <!-- Register OpenCensus Prometheus collector -->
+      <bean id="opencensusWrapper" class="org.springframework.beans.factory.config.MethodInvokingBean">
+        <property name="staticMethod" 
+                  value="io.opencensus.exporter.stats.prometheus.PrometheusStatsCollector.createAndRegister"/>
+      </bean>
+      
+      <!-- Start Prometheus HTTPServer on port 9000 -->
+      <bean id="httpServer" class="io.prometheus.client.exporter.HTTPServer">
+        <constructor-arg type="java.lang.String" value="0.0.0.0"/>
+        <constructor-arg type="int" value="9000"/>
+        <constructor-arg type="boolean" value="true"/>
+      </bean>
+      
+      <!-- Ignite configuration with OpenCensus metric exporter -->
+      <bean id="igniteCfg" class="org.apache.ignite.configuration.IgniteConfiguration">
+        <!-- Update frequency (in ms) -->
+        <property name="metricsUpdateFrequency" value="1000"/>
+        
+        <!-- OpenCensus metric exporter -->
+        <property name="metricExporterSpi">
+          <list>
+            <bean class="org.apache.ignite.spi.metric.opencensus.OpenCensusMetricExporterSpi">
+              <property name="period" value="1000"/>
+            </bean>
+          </list>
+        </property>
+        
+        <!-- Enable metrics on the default data region -->
+        <property name="dataStorageConfiguration">
+          <bean class="org.apache.ignite.configuration.DataStorageConfiguration">
+            <property name="defaultDataRegionConfiguration">
+              <bean class="org.apache.ignite.configuration.DataRegionConfiguration">
+                <property name="metricsEnabled" value="true"/>
+                <property name="initialSize" value="#{256L * 1024 * 1024}"/>
+                <property name="maxSize" value="#{1024L * 1024 * 1024}"/>
+              </bean>
+            </property>
+          </bean>
+        </property>
+        
+        <!-- Use Kubernetes IP finder for discovery -->
+        <property name="discoverySpi">
+          <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
+            <property name="ipFinder">
+              <bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder">
+                <property name="serviceName" value="ignite"/>
+              </bean>
+            </property>
+          </bean>
+        </property>
+        
+      </bean>
+    </beans>

@@ -1,0 +1,59 @@
+{
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": {
+        "creationTimestamp": "2025-03-11T08:36:16Z",
+        "deletionTimestamp": "2025-03-18T05:09:11Z",
+        "labels": {
+            "kubernetes.io/metadata.name": "demo"
+        },
+        "name": "demo",
+        "resourceVersion": "244778",
+        "uid": "96863d3e-cdd6-459b-acd7-9bbcce42b35e"
+    },
+    "spec": {
+        "finalizers": [
+            "kubernetes"
+        ]
+    },
+    "status": {
+        "conditions": [
+            {
+                "lastTransitionTime": "2025-03-18T05:09:16Z",
+                "message": "All resources successfully discovered",
+                "reason": "ResourcesDiscovered",
+                "status": "False",
+                "type": "NamespaceDeletionDiscoveryFailure"
+            },
+            {
+                "lastTransitionTime": "2025-03-18T05:09:16Z",
+                "message": "All legacy kube types successfully parsed",
+                "reason": "ParsedGroupVersions",
+                "status": "False",
+                "type": "NamespaceDeletionGroupVersionParsingFailure"
+            },
+            {
+                "lastTransitionTime": "2025-03-18T05:09:53Z",
+                "message": "Failed to delete all resource types, 1 remaining: unexpected items still remain in namespace: demo for gvr: /v1, Resource=pods",
+                "reason": "ContentDeletionFailed",
+                "status": "True",
+                "type": "NamespaceDeletionContentFailure"
+            },
+            {
+                "lastTransitionTime": "2025-03-18T05:09:16Z",
+                "message": "Some resources are remaining: persistentvolumeclaims. has 1 resource instances, pods. has 1 resource instances",
+                "reason": "SomeResourcesRemain",
+                "status": "True",
+                "type": "NamespaceContentRemaining"
+            },
+            {
+                "lastTransitionTime": "2025-03-18T05:09:16Z",
+                "message": "Some content in the namespace has finalizers remaining: kubernetes.io/pvc-protection in 1 resource instances",
+                "reason": "SomeFinalizersRemain",
+                "status": "True",
+                "type": "NamespaceFinalizersRemaining"
+            }
+        ],
+        "phase": "Terminating"
+    }
+}

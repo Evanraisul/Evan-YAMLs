@@ -4,8 +4,7 @@ metadata:
   name: memcd-quickstart
   namespace: demo
 spec:
+  disableAuth: true
   replicas: 1
   version: "1.6.22"
-  authSecret:
-    name: mc-auth
   deletionPolicy: WipeOut
